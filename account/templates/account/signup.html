@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block head %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="wrapper">
+    <div class="payment">
+        <div class="payment-logo">
+            <p>S</p>
+        </div>
+
+        <h2>SignUp a User</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form">
+                <label class="label">First Name:</label>
+                <div class="card space icon-relative">
+
+
+                    {{form.first_name}}
+                </div>
+                <label class="label">Last Name</label>
+                <div class="card space icon-relative">
+
+                    {{form.last_name}}
+
+                </div>
+                <label class="label">Email (optional)</label>
+                <div class="card space icon-relative">
+
+                    {{form.email}}
+
+                </div>
+                <label class="label">Username</label>
+                <div class="card space icon-relative">
+
+                    {{form.username}}
+
+                </div>
+                <small>{{form.username.errors}}</small>
+                <label class="label">Password</label>
+                <div class="card space icon-relative">
+
+                    {{form.password1}}
+
+                </div>
+                <small>{{form.password1.errors}}</small>
+                <label class="label">Confirm Password</label>
+                <div class="card space icon-relative">
+
+                    {{form.password2}}
+
+                </div>
+                <small>{{form.password2.errors}}</small>
+                <label class="label">User Type</label>
+                <div class="card space icon-relative">
+
+                    {{form.user_choice}}
+
+                </div>
+                {{form.non_field_errors}}
+                <input type="submit" value="Register" class="btn btn-block btn-primary">
+
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

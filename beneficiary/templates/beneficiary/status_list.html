@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+    $(document).ready(function () {
+        (function () {
+            // console.log('nvjvhchHi');
+            scrollPix = parseFloat(localStorage.getItem("scrollPixel"));
+            document.scrollingElement.scrollTop += parseFloat(scrollPix);
+        })();
+    })
+
+</script>
+<h1>
+    Pending and Approved List
+</h1>
+<form method="GET">
+    {{ filter.form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+<ul>
+    {% for query in filter.qs %}
+    <li>{{query.beneficiary.scheme}} {{query.beneficiary.name}} {{query.beneficiary.age}}
+        {{query.beneficiary.phone_num}} {{query.beneficiary.account_number}} {{query.beneficiary.ifsc_code}}
+        {% if query.beneficiary.pk in pending_list or query.beneficiary.pk in disapproved_list %}
+        <a href="{% url 'beneficiary:status_temp_approve' pk=query.beneficiary.pk %}" onclick="check_url()">Approve</a>
+        {% endif %}
+        {% if not query.beneficiary.pk in disapproved_list %}
+        <a href="{% url 'beneficiary:status_disapprove' pk=query.beneficiary.pk %}" onclick="check_url()">Disapprove</a>
+        {% endif %}
+        {% if not query.beneficiary.pk in pending_list %}
+        <a href="{% url 'beneficiary:status_pending' pk=query.beneficiary.pk %}" onclick="check_url()">Pending</a>
+        {% endif %}
+
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'beneficiary:make_temp_payment' %}"><button>Submit</button></a>
+{% endblock %}

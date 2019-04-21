@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>
+    Beneficiary List
+</h1>
+<form method="GET">
+    {{ filter.form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    $(document).ready(function () {
+        (function () {
+            // console.log('nvjvhchHi');
+            scrollPix = parseFloat(localStorage.getItem("scrollPixel"));
+            document.scrollingElement.scrollTop += parseFloat(scrollPix);
+        })();
+    })
+
+</script>
+
+<ul>
+    {% for query in filter.qs %}
+    <li>{{query.name}} {{query.gender}} {{query.age}} {{query.phone_num}} {{query.account_number}} {{query.ifsc_code}}
+        {% if query.pk in pending_list or query.pk in disapproved_list %}
+        <a href="{% url 'beneficiary:status_approve' pk=query.pk %}" onclick="check_url()">Approve</a>
+        {% endif %}
+        {% if not query.pk in disapproved_list %}
+        <a href="{% url 'beneficiary:status_disapprove' pk=query.pk %}" onclick="check_url()">Disapprove</a>
+        {% endif %}
+        {% if not query.pk in pending_list %}
+        <a href="{% url 'beneficiary:status_pending' pk=query.pk %}" onclick="check_url()">Pending</a>
+        {% endif %}
+
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'home' %}"><button>Submit</button></a>
+{% endblock %}
