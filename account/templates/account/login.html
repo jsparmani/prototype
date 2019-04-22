@@ -1,9 +1,34 @@
 {% extends 'base.html' %}
-
+{% load staticfiles %}
 {% block content %}
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Login">
-    </form>
+<link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+<div class="wrapper">
+    <div class="payment">
+        <div class="payment-logo">
+            <p>L</p>
+        </div>
+
+        <h2>Login</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form">
+                
+                
+                
+                
+                <label class="label">Username</label>
+                <div class="card space icon-relative">
+                    {{form.username}}
+                </div>
+                <label class="label">Password</label>
+                <div class="card space icon-relative">
+                    {{form.password}}
+                </div>
+                
+                <input type="submit" value="Submit" class="btn btn-block btn-primary">
+
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

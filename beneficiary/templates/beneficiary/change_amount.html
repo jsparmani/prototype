@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+<div class="wrapper">
+    <div class="payment">
+        <div class="payment-logo">
+            <p>S</p>
+        </div>
+
+        <h2>Change Scheme Amount</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form">
+                
+                
+                
+                
+                <label class="label">Scheme</label>
+                <div class="card space icon-relative">
+                    {{form.scheme}}
+                </div>
+                <label class="label">Amount</label>
+                <div class="card space icon-relative">
+                    {{form.amount}}
+                </div>
+                <input type="submit" value="Add" class="btn btn-block btn-primary">
+
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+<div class="container">
+    <canvas id="myChart" width="30" height="12" style="background-color:#fff;"></canvas>
+</div>
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: jsonobject[0].label,
+            datasets: [{
+                label: "Widow Pension",
+                data: jsonobject[0].value,
+                backgroundColor: [
+                    'rgba(0,0,0,0)',
+                ],
+                borderColor: [
+                    'rgba(255,99,132,0.8)',
+                ],
+                borderWidth: 2.5
+            },
+            {
+                label: "Old Age Pension",
+                data: jsonobject[1].value,
+                backgroundColor: [
+                    'rgba(0,0,0,0)',
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 0.8)',
+
+                ],
+                borderWidth: 2.5
+            },
+            {
+                label: "Student Scholarship",
+                data: jsonobject[2].value,
+                backgroundColor: [
+                    'rgba(0,0,0,0)',
+                ],
+                borderColor: [
+                    'rgba(255, 206, 86, 0.8)',
+
+                ],
+                borderWidth: 2.5
+            }]
+        },
+        /* options: {
+            scales: {
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: false,
+                    }
+                }],
+                xAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        } */
+    });
+</script>

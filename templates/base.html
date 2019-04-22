@@ -1,39 +1,331 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html lang="en">
+
 <head>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Prototype</title>
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
-    integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Government Web Portal</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script src="{% static 'js/base.js' %}"></script>
     {% block head %}
+    <!-- Material Design Bootstrap -->
+    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     {% endblock %}
 </head>
+
 <body>
-    <a href="{% url 'beneficiary:add_applicant' %}">Add Applicant</a>
-    {% if user.is_authenticated %}
-    {% if user.username == 'clerk' %}
-    <a href="{% url 'beneficiary:search' %}">Search</a>  
-    <a href="{% url 'beneficiary:list_applicant_clerk' %}">List Applicant</a>
-    {% endif %}
-    {% if user.username == 'adc' %}
-    <a href="{% url 'beneficiary:search_admin' %}">Search ADC</a>  
-    <a href="{% url 'beneficiary:edit_transactions_admin' %}">Edit Transactions</a> 
-    <a href="{% url 'beneficiary:list_applicant_adc' %}">List Applicant</a> 
-    {% endif %}
-    {% if user.username == 'rentcol' %}
-    <a href="{% url 'beneficiary:list_applicant_rent' %}">List Applicant</a>  
-    {% endif %}
-    <a href="{% url 'account:logout' %}">Logout</a>
-    {% else %}
-    <a href="{% url 'account:login' %}">Login</a>
-    {% endif %}
-    
+
+    <!-- Start your project here-->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-dark">
+        <a class="navbar-brand" href="{% url 'home' %}">Punjab Government</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'beneficiary:add_applicant' %}">Apply</a>
+                </li>
+                {% if user.is_authenticated %}
+                {% if user.username == 'rentcol' %}
+                <li class="nav-item">
+                    <a href="{% url 'beneficiary:list_applicant_rent' %}" class="nav-link">List Applicant</a>
+                </li>
+                {% endif %}
+                {% if user.username == 'clerk' %}
+                <li class="nav-item">
+                    <a href="{% url 'beneficiary:search' %}" class="nav-link">List Beneficiaries</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'beneficiary:list_applicant_clerk' %}" class="nav-link">List Applicant</a>
+                </li>
+                {% endif %}
+                {% if user.username == 'adc' %}
+
+                <li class="nav-item">
+                    <a href="{% url 'beneficiary:search_admin' %}" class="nav-link">List Beneficiaries</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'beneficiary:edit_transactions_admin' %}" class="nav-link">Edit Transactions</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'beneficiary:list_applicant_adc' %}" class="nav-link">List Applicant</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'beneficiary:change_amount' %}" class="nav-link">Change Scheme Amount</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Analyze
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'beneficiary:display_beneficiary_number' %}">Analyze beneficiary</a>
+                        <a class="dropdown-item" href="{% url 'beneficiary:schemewise_data' %}">Analyze Funds</a>
+                        <div class="dropdown-divider"></div>
+            
+                    </div>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:login' %}">Login</a>
+                </li>
+                {% endif %}
+                
+            </ul>
+        </div>
+    </nav>
     {% block content %}
+    <section class="home-hero parallax--bg">
+        <div class="container_parallax">
+            <div class="text-box">
+                <h1 class="heading-primary">
+                    <span class="heading-primary-main">Government</span>
+                    <span class="heading-primary-sub">of Punjab</span>
+                </h1>
+            </div>
+            <a href="#" class="btng btng-white">Go To Home</a>
+        </div>
+    </section>
+    <section class="section-about">
+        <div class="u-center-text u-margin-bottom-8">
+            <h2 class="heading-secondary">
+                About Punjab Government
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-1"></div>
+
+            <div class="col-lg-5">
+                <h3 class="heading-tertiary u-margin-bottom-small">Working of Government</h3>
+                <p class="paragraph">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque architecto quia
+                    tempora
+                    deleniti, iusto sunt
+                    autem blanditiis corrupti vitae fugit!</p><br><br>
+                <h3 class="heading-tertiary u-margin-bottom-small">Heirarchy System Of Government</h3>
+                <p class="paragraph">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque architecto quia
+                    tempora
+                    deleniti, iusto sunt
+                    autem blanditiis corrupti vitae fugit!</p><br><br>
+                <div id="view_more_div" class="row text-center accordion-body collapse">
+                    <p style="transition: 3s transform ease-in-out;">Lorem ipsum dolor sit amet consectetur adipisicing
+                        elit. Quae
+                        molestiae enim aspernatur labore corrupti
+                        laborum, unde dicta laudantium consequuntur. Culpa.</p>
+                </div>
+                <a for="collapseOne" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse"
+                    href="#view_more_div" class="btn-text">View More &rarr;</a>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="composition">
+                    <img src="{% static 'img/sample_2.png' %}" alt="photo1"
+                        class="composition__photo composition__photo--p1">
+                    <img src="{% static 'img/sample_3.png' %}" alt="photo2"
+                        class="composition__photo composition__photo--p2">
+                    <img src="{% static 'img/sample_1.jpg' %}" alt="photo3"
+                        class="composition__photo composition__photo--p3">
+                </div>
+                <div class="col-lg-1"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section-feature parallax--bg">
+        <div class="row container_parallax">
+            <center>
+                <div class="col-lg-3">
+                    <div class="feature-box">
+                        <i class="feature-box__icon fa fa-globe" style="font-size: 40px;"></i>
+                        <h3 class="heading-tertiary">Explore The World</h3>
+                        <p class="feature-box__text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae ad ex pariatur
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="feature-box">
+                        <i class="feature-box__icon fa fa-users" style="font-size: 40px;"></i>
+                        <h3 class="heading-tertiary">Meet Our Team</h3>
+                        <p class="feature-box__text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae ad ex pariatur
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="feature-box">
+                        <i class="feature-box__icon fa fa-globe" style="font-size: 40px;"></i>
+                        <h3 class="heading-tertiary">Explore The World</h3>
+                        <p class="feature-box__text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae ad ex pariatur
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="feature-box">
+                        <i class="feature-box__icon fa fa-users" style="font-size: 40px;"></i>
+                        <h3 class="heading-tertiary">Meet Our Team</h3>
+                        <p class="feature-box__text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae ad ex pariatur
+                        </p>
+                    </div>
+                </div>
+            </center>
+        </div>
+
+    </section>
+    <section class="section-stories">
+        <div class="u-center-text u-margin-bottom-big">
+            <h2 class="heading-secondary">
+                LATEST UPDATES
+            </h2>
+        </div>
+        <div class="row">
+            <div class="story">
+                <figure class="story__shape">
+                    <img src="{% static 'img/sample_2.png' %}" class="story__img" alt="">
+                    <figcaption class="story__caption">
+                        Title
+                    </figcaption>
+                </figure>
+                <h3 class="heading-tertiary">lorem ipsum dolor</h3>
+                <p class="story__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae dignissimos
+                    exercitationem consequatur
+                    rem, dolor, neque repellat sunt hic aspernatur sit magni temporibus? Aperiam, nisi consectetur ut
+                    dolorem
+                    ducimus repellat ipsa.</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="story">
+                <figure class="story__shape">
+                    <img src="{% static 'img/sample_3.png' %}" class="story__img" alt="">
+                    <figcaption class="story__caption">
+                        Title
+                    </figcaption>
+                </figure>
+                <h3 class="heading-tertiary">lorem ipsum dolor</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae dignissimos exercitationem
+                    consequatur
+                    rem, dolor, neque repellat sunt hic aspernatur sit magni temporibus? Aperiam, nisi consectetur ut
+                    dolorem
+                    ducimus repellat ipsa.</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="story">
+                <figure class="story__shape">
+                    <img src="{% static 'img/sample_1.jpg' %}" class="story__img" alt="">
+                    <figcaption class="story__caption">
+                        Title
+                    </figcaption>
+                </figure>
+                <h3 class="heading-tertiary">lorem ipsum dolor</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae dignissimos exercitationem
+                    consequatur
+                    rem, dolor, neque repellat sunt hic aspernatur sit magni temporibus? Aperiam, nisi consectetur ut
+                    dolorem
+                    ducimus repellat ipsa.</p>
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <div class="footer_main">
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4" style="font-size: 34px; text-align: center; margin-bottom: 50px;">Tabs For Navigation
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4" style="color: #fff; ">
+                <a href="">Home</a><br>
+                <a href="">About Us</a><br>
+                <a href="">Schemes</a><br>
+                <a href="">Acts</a><br>
+                <a href="">Rules</a><br>
+                <a href="">Regulations</a><br>
+
+            </div>
+            <div class="col-lg-4">
+                <a href="">Beneficiary</a><br>
+                <a href="">Complaints</a><br>
+                <a href="">Wakf Board</a><br>
+                <a href="">Punjab Government</a><br>
+                <a href="">Institutions</a><br>
+                <a href="">Reports</a><br>
+            </div>
+
+            <div class="col-lg-4">
+                <a href="">RTI</a><br>
+                <a href="">Login</a><br>
+                <a href="">Projects</a><br>
+                <a href="">Pensions</a><br>
+                <a href="">Scholarships</a><br>
+                <a href="">Contact Us</a><br>
+            </div>
+        </div>
+    </div>
+    <div class="footer_second" style="background: #131A22; height:10vh; color: #fff;">
+        <div style="height: 3vh;"></div>
+        <p> &copy; Punjab WAKF Board 2019</p>
+    </div>
+
     {% endblock %}
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+    <script src="https://use.fontawesome.com/f12e4a6b3c.js"></script>
+
 </body>
+
 </html>

@@ -23,3 +23,15 @@ class AddApplicantForm(forms.ModelForm):
         exclude = ['is_approved_rent', 'is_approved_clerk', 'is_approved_adc', 'is_disapproved']
 
 
+class ChangeAmountForm(forms.Form):
+
+    SCHEME_CHOICES = [
+        ('Widow Pension', 'Widow Pension'),
+        ('Old Age Pension', 'Old Age Pension'),
+        ('Student Scholarship', 'Student Scholarship'),
+    ]
+    scheme = forms.ChoiceField(choices=SCHEME_CHOICES)
+    amount = forms.IntegerField()
+
+
+

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+        var jsonobject = JSON.parse('{{ jsondata | escapejs }}');
+    </script>
+    <br><br>
+<h1>Schemewise Data</h1>
+{% include "beneficiary/_charts_line.html" %}
+{% endblock %}  

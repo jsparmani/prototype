@@ -11,14 +11,21 @@ function manage() {
         document.scrollingElement.scrollTop += parseFloat(localStorage.getItem("scrollPixel"))
 
     }
-    if (window.location.href.includes('check_url')) {
-
-        window.location.href = localStorage.getItem("url");
-    }
+    
 
     if (window.location.href.includes('list_applicant')) {
         document.scrollingElement.scrollTop += parseFloat(localStorage.getItem("scrollPixel"))
 
+    }
+
+    if (window.location.href.includes('edit_transactions_admin')) {
+        document.scrollingElement.scrollTop += parseFloat(localStorage.getItem("scrollPixel"))
+
+    }
+
+    if (window.location.href.includes('check_url')) {
+
+        window.location.href = localStorage.getItem("url");
     }
 }
 

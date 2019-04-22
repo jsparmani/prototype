@@ -5,6 +5,7 @@ from . import models
 from . import filters
 from . import forms
 import datetime
+import json
 
 # Create your views here.
 
@@ -228,6 +229,87 @@ def applicant_approve_clerk(request, pk):
     applicant.is_approved_clerk = 1
     applicant.save()
     return redirect('beneficiary:check_url')
+
+
+def display_beneficiary_number(request):
+
+    widow = models.Beneficiary.objects.all().filter(scheme__name__exact='Widow Pension').count()
+    old_age = models.Beneficiary.objects.all().filter(scheme__name__exact='Old Age Pension').count()
+    scholarship = models.Beneficiary.objects.all().filter(scheme__name__exact='Student Scholarship').count()
+
+
+
+    label = ['Widow Pension', 'Old Age Pension', 'Student Scholarship']
+
+    data = {
+                "label": label,
+                "value": [widow,old_age,scholarship]
+
+            }
+    jsondata = json.dumps(data)
+
+    return render(request, 'beneficiary/display_beneficiary_number.html', {'jsondata':jsondata})
+
+
+def schemewise_data(request):
+
+    value1=[]
+    value2=[]
+    value3=[]
+    for month in range(1,13):
+        value1.append(models.Transaction.objects.all().filter(beneficiary__scheme__name__exact='Widow Pension', month__exact=month).count() * models.Scheme.objects.get(name__exact='Widow Pension').amount)
+        value2.append(models.Transaction.objects.all().filter(beneficiary__scheme__name__exact='Old Age Pension', month__exact=month).count() * models.Scheme.objects.get(name__exact='Old Age Pension').amount)
+        value3.append(models.Transaction.objects.all().filter(beneficiary__scheme__name__exact='Student Scholarship', month__exact=month).count() * models.Scheme.objects.get(name__exact='Student Scholarship').amount)
+
+    data = [{
+        "label": ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+        "value": value1
+    },
+    {
+        "label": ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+        "value": value2
+    },
+    {
+        "label": ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+        "value": value3
+    }]
+
+    jsondata = json.dumps(data)
+
+    return render(request, 'beneficiary/schemewise_data.html', {'jsondata': jsondata})
+
+
+def personwise_data(request, pk):
+
+    data = []
+    for month in range(1,13):
+       transacts =  models.Transaction.objects.all().filter(pk__exact=pk, month__exact=month, year__exact=datetime.datetime.now().year)
+       if len(transacts) == 0:
+           data.append(0)
+       else:
+            data.append(1)
+
+    
+
+    return render(request, 'beneficiary/personwise_data.html', {'data': data})
+
+
+def change_amount(request):
+    if request.method == 'POST':
+        form = forms.ChangeAmountForm(request.POST)
+        if form.is_valid():
+            scheme = models.Scheme.objects.get(name__iexact=form.cleaned_data['scheme'])
+            scheme.amount = form.cleaned_data['amount']
+            scheme.save()
+            return redirect('beneficiary:change_amount')
+        else:
+            return HttpResponse("<h1>Some Error Occured</h1>")
+        
+    else:
+        form = forms.ChangeAmountForm()
+        return render(request, 'beneficiary/change_amount.html', {'form':form})
+            
+
 
 
 

@@ -1,9 +1,53 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+<div class="wrapper">
+    <div class="payment">
+        <div class="payment-logo">
+            <p>A</p>
+        </div>
 
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Submit">
-</form>
+        <h2>Add Applicant</h2>
+        <form method="POST"">
+            {% csrf_token %}
+            <div class="form">
+                
+                
+                
+                
+                <label class="label">Scheme</label>
+                <div class="card space icon-relative">
+                    {{form.scheme}}
+                </div>
+                <label class="label">Name</label>
+                <div class="card space icon-relative">
+                    {{form.name}}
+                </div>
+                <label class="label">Gender</label>
+                <div class="card space icon-relative">
+                    {{form.gender}}
+                </div>
+                <label class="label">Age</label>
+                <div class="card space icon-relative">
+                    {{form.age}}
+                </div>
+                <label class="label">Phone number</label>
+                <div class="card space icon-relative">
+                    {{form.phone_num}}
+                </div>
+                <label class="label">Account Number</label>
+                <div class="card space icon-relative">
+                    {{form.account_number}}
+                </div>
+                <label class="label">IFSC Code</label>
+                <div class="card space icon-relative">
+                    {{form.ifsc_code}}
+                </div>
+                <input type="submit" value="Add" class="btn btn-block btn-primary">
+
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

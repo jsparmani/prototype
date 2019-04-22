@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'beneficiary',
     'account',
+    'widget_tweaks',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

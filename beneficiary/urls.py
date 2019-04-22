@@ -23,5 +23,9 @@ urlpatterns = [
     path('add_beneficiary/<int:pk>/', views.add_beneficiary, name='add_beneficiary'),
     path('applicant_approve_rent/<int:pk>/', views.applicant_approve_rent, name='applicant_approve_rent'),
     path('applicant_approve_clerk/<int:pk>/', views.applicant_approve_clerk, name='applicant_approve_clerk'),
+    path('display_beneficiary_number/', views.display_beneficiary_number, name='display_beneficiary_number'),
+    path('schemewise_data/', views.schemewise_data, name='schemewise_data'),
+    path('change_amount/', views.change_amount, name='change_amount'),
+    
     
 ] 

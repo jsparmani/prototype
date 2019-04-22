@@ -1,4 +1,107 @@
 {% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+<link rel="stylesheet" href="{% static 'css/table_style1.css' %}">
+<script>
+    $(document).ready(function () {
+        (function () {
+            // console.log('nvjvhchHi');
+            scrollPix = parseFloat(localStorage.getItem("scrollPixel"));
+            document.scrollingElement.scrollTop += parseFloat(scrollPix);
+        })();
+    })
+
+</script>
+
+<div class="wrapper">
+    <div class="payment">
+        <div class="payment-logo">
+            <p>B</p>
+        </div>
+        <h2>Beneficiary List</h2>
+        <form method="GET">
+            {% csrf_token %}
+            <div class="form">
+                <label class="label">{{filter.form.name__istartswith.label_tag}}</label>
+                <div class="card space icon-relative">
+                    {% render_field filter.form.name__istartswith %}
+                </div>
+                <label class="label">{{filter.form.age.label_tag}}</label>
+                <div class="card space icon-relative">
+                    {% render_field filter.form.age %}
+                </div>
+                <label class="label">{{filter.form.age__lt.label_tag}}</label>
+                <div class="card space icon-relative">
+                    {% render_field filter.form.age__lt %}
+                </div>
+                <label class="label">{{filter.form.age__gt.label_tag}}</label>
+                <div class="card space icon-relative">
+                    {% render_field filter.form.age__gt %}
+                </div>
+                <label class="label">Phone Number</label>
+                <div class="card space icon-relative">
+                    {% render_field filter.form.phone_num %}
+                </div>
+                <label class="label">{{filter.form.account_number.label_tag}}</label>
+                <div class="card space icon-relative">
+                    {% render_field filter.form.account_number %}
+                </div>
+                <label class="label">IFSC Code</label>
+                <div class="card space icon-relative">
+                    {% render_field filter.form.ifsc_code %}
+                </div>
+                <input type="submit" value="Submit" class="btn btn-block btn-primary">
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<h1 class="table_heading"><strong>Search Result</strong></h1>
+<table class="table table-hover text-center">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Name</th>
+			<th scope="col">Gender</th>
+			<th scope="col">Age</th>
+			<th scope="col">Phone Number</th>
+      <th scope="col">Account Number</th>
+      <th scope="col">IFSC Code</th>
+      <th scope="col"></th>
+      <th scope="col">Status</th>
+      <th scope="col"></th>
+		</tr>
+	</thead>
+	<tbody>
+        {% for query in filter.qs %}
+		<tr>
+			<th scope="row">#</th>
+			
+			<td>{{query.name}}</td>
+			<td>{{query.gender}}</td>
+			<td>{{query.age}}</td>
+			<td>{{query.phone_num}}</td>
+			<td>{{query.account_number}}</td>
+			<td>{{query.ifsc_code}}</td>
+			<td>{% if query.pk in pending_list or query.pk in disapproved_list %}<a href="{% url 'beneficiary:status_approve' pk=query.pk %}" onclick="check_url()" class="btn btn-primary">Approve</a>{% else %}<a href="#" class="btn btn-danger" style="cursor:not-allowed" onclick="return false;">Approve</a>{% endif %}</td>
+			<td>{% if not query.pk in disapproved_list %}<a href="{% url 'beneficiary:status_disapprove' pk=query.pk %}" onclick="check_url()" class="btn btn-primary">Disapprove</a>{% else %}<a href="#" class="btn btn-danger" style="cursor:not-allowed" onclick="return false;">Disapprove</a>{% endif %}</td>
+			<td>{% if not query.pk in pending_list %}<a href="{% url 'beneficiary:status_pending' pk=query.pk %}" onclick="check_url()" class="btn btn-primary">Pending</a>{% else %}<a href="#" class="btn btn-danger" style="cursor:not-allowed" onclick="return false;">Pending</a>{% endif %}</td>
+    
+		{% empty %}
+		<tr><td></td><td></td><td>No data found!</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
+
+
+{% comment %}
+{% extends 'base.html' %}
 {% block content %}
 <h1>
     Beneficiary List
@@ -38,3 +141,4 @@
 
 <a href="{% url 'home' %}"><button>Submit</button></a>
 {% endblock %}
+{% endcomment %}
