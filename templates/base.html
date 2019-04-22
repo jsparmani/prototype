@@ -71,13 +71,13 @@
                     <a href="{% url 'beneficiary:change_amount' %}" class="nav-link">Change Scheme Amount</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    <a class="nav-link dropdown-toggle" href="#dropdown_menu_id" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Analyze
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'beneficiary:display_beneficiary_number' %}">Analyze beneficiary</a>
-                        <a class="dropdown-item" href="{% url 'beneficiary:schemewise_data' %}">Analyze Funds</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropdown_menu_id">
+                        <a class="dropdown-item" href="{% url 'beneficiary:display_beneficiary_number' %}" style="color: #000000 !important;">Analyze beneficiary</a>
+                        <a class="dropdown-item" href="{% url 'beneficiary:schemewise_data' %}" style="color: #000000 !important;">Analyze Funds</a>
                         <div class="dropdown-divider"></div>
             
                     </div>
