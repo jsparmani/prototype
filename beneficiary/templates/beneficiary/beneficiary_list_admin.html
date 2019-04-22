@@ -63,7 +63,7 @@
 </div>
 
 <h1 class="table_heading"><strong>Search Result</strong></h1>
-<center><a href="{% url 'beneficiary:make_payment' %}"><button class="btn btn-outline-secondary" style="background: #d9534f;">Make Payment</button></a></center>
+<center><a href="{% url 'beneficiary:make_payment' %}"><button class="btn btn-danger" style="background: #d9534f;">Make Payment</button></a></center>
 <table class="table table-hover text-center">
 	<thead>
 		<tr>
@@ -90,9 +90,9 @@
 			<td>{{query.phone_num}}</td>
 			<td>{{query.account_number}}</td>
 			<td>{{query.ifsc_code}}</td>
-			<td>{% if query.pk in pending_list or query.pk in disapproved_list %}<a href="{% url 'beneficiary:status_approve' pk=query.pk %}" onclick="check_url()" class="btn btn-primary">Approve</a>{% else %}<a href="#" class="btn btn-danger" style="cursor:not-allowed" onclick="return false;">Approve</a>{% endif %}</td>
-			<td>{% if not query.pk in disapproved_list %}<a href="{% url 'beneficiary:status_disapprove' pk=query.pk %}" onclick="check_url()" class="btn btn-primary">Disapprove</a>{% else %}<a href="#" class="btn btn-danger" style="cursor:not-allowed" onclick="return false;">Disapprove</a>{% endif %}</td>
-			<td>{% if not query.pk in pending_list %}<a href="{% url 'beneficiary:status_pending' pk=query.pk %}" onclick="check_url()" class="btn btn-primary">Pending</a>{% else %}<a href="#" class="btn btn-danger" style="cursor:not-allowed" onclick="return false;">Pending</a>{% endif %}</td>
+			<td>{% if query.pk in pending_list or query.pk in disapproved_list %}<a href="{% url 'beneficiary:status_approve' pk=query.pk %}" onclick="check_url()" class="btn btn-success" style="color: #fff;">Approve</a>{% else %}<a href="#" class="btn btn-success" style="cursor:not-allowed; color: #fff;" onclick="return false;">Approve</a>{% endif %}</td>
+			<td>{% if not query.pk in disapproved_list %}<a href="{% url 'beneficiary:status_disapprove' pk=query.pk %}" onclick="check_url()" class="btn btn-danger" style="color: #fff;">Disapprove</a>{% else %}<a href="#" class="btn btn-danger" style="cursor:not-allowed; color: #fff;" onclick="return false;">Disapprove</a>{% endif %}</td>
+			<td>{% if not query.pk in pending_list %}<a href="{% url 'beneficiary:status_pending' pk=query.pk %}" onclick="check_url()" class="btn btn-warning" style="color: #fff;">Pending</a>{% else %}<a href="#" class="btn btn-warning" style="cursor:not-allowed; color: #fff;" onclick="return false;">Pending</a>{% endif %}</td>
     
 		{% empty %}
 		<tr><td></td><td></td><td>No data found!</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>

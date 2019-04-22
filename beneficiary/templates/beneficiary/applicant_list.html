@@ -17,7 +17,7 @@
             <th scope="col">Account Number</th>
             <th scope="col">IFSC Code</th>
             
-            <th scope="col">Status</th>
+            <th scope="col"></th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -33,17 +33,17 @@
             <td>{{applicant.account_number}}</td>
             <td>{{applicant.ifsc_code}}</td>
             <td><a href="{% url 'beneficiary:disapprove_applicant' pk=applicant.pk %}"
-                    onclick="check_url()" class="btn btn-primary">Disapprove</a></td>
+                    onclick="check_url()" class="btn btn-danger" style= "color: #fff;">Disapprove</a></td>
             <td>{% if user.username == 'rentcol' %}
                 <a href="{% url 'beneficiary:applicant_approve_rent' pk=applicant.pk %}"
-                    onclick="check_url()" class="btn btn-primary">Approve</a>
+                    onclick="check_url()" class="btn btn-success" style= "color: #fff;">Approve</a>
                 {% endif %}
                 {% if user.username == 'clerk' %}
                 <a href="{% url 'beneficiary:applicant_approve_clerk' pk=applicant.pk %}"
-                    onclick="check_url()" class="btn btn-primary">Approve</a>
+                    onclick="check_url()" class="btn btn-success" style= "color: #fff;">Approve</a>
                 {% endif %}
                 {% if user.username == 'adc' %}
-                <a href="{% url 'beneficiary:add_beneficiary' pk=applicant.pk %}" onclick="check_url()" class="btn btn-primary">Approve</a>
+                <a href="{% url 'beneficiary:add_beneficiary' pk=applicant.pk %}" onclick="check_url()" class="btn btn-success" style= "color: #fff;">Approve</a>
                 {% endif %}</td>
 
 
@@ -65,6 +65,28 @@
     </tbody>
 </table>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% comment %}
 {% extends 'base.html' %}
 {% block content %}
