@@ -14,6 +14,25 @@
     {% endblock %}
 </head>
 <body>
+    <a href="{% url 'beneficiary:add_applicant' %}">Add Applicant</a>
+    {% if user.is_authenticated %}
+    {% if user.username == 'clerk' %}
+    <a href="{% url 'beneficiary:search' %}">Search</a>  
+    <a href="{% url 'beneficiary:list_applicant_clerk' %}">List Applicant</a>
+    {% endif %}
+    {% if user.username == 'adc' %}
+    <a href="{% url 'beneficiary:search_admin' %}">Search ADC</a>  
+    <a href="{% url 'beneficiary:edit_transactions_admin' %}">Edit Transactions</a> 
+    <a href="{% url 'beneficiary:list_applicant_adc' %}">List Applicant</a> 
+    {% endif %}
+    {% if user.username == 'rentcol' %}
+    <a href="{% url 'beneficiary:list_applicant_rent' %}">List Applicant</a>  
+    {% endif %}
+    <a href="{% url 'account:logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'account:login' %}">Login</a>
+    {% endif %}
+    
     {% block content %}
     {% endblock %}
 </body>

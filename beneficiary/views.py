@@ -177,6 +177,61 @@ def add_applicant(request):
         return render(request, 'beneficiary/add_applicant.html', {'form':form})
 
 
+def list_applicant_rent(request):
+    applicant_list = models.Applicant.objects.all().filter(is_disapproved__exact=0, is_approved_rent__exact=0)
+    return render(request, 'beneficiary/applicant_list.html', {'applicant_list':applicant_list})
+
+
+def list_applicant_clerk(request):
+    applicant_list = models.Applicant.objects.all().filter(is_disapproved__exact=0,is_approved_clerk__exact=0, is_approved_rent__exact=1)
+    return render(request, 'beneficiary/applicant_list.html', {'applicant_list':applicant_list})
+
+
+def list_applicant_adc(request):
+    applicant_list = models.Applicant.objects.all().filter(is_disapproved__exact=0,is_approved_adc__exact=0, is_approved_clerk__exact=1)
+    return render(request, 'beneficiary/applicant_list.html', {'applicant_list':applicant_list})
+
+
+def disapprove_applicant(request, pk):
+    applicant = models.Applicant.objects.get(pk__exact=pk)
+    applicant.is_disapproved = True
+    applicant.save()
+    return redirect('beneficiary:check_url')
+
+def add_beneficiary(request,pk):
+    applicant = models.Applicant.objects.get(pk__exact=pk)
+    applicant.is_approved_adc=1
+    applicant.save()
+    models.Beneficiary.objects.create(
+        scheme=applicant.scheme,
+        name = applicant.name,
+        gender = applicant.gender,
+        age = applicant.age,
+        phone_num = applicant.phone_num,
+        account_number = applicant.account_number,
+        ifsc_code = applicant.ifsc_code
+    )
+
+    return redirect('beneficiary:check_url')
+
+
+def applicant_approve_rent(request, pk):
+
+    applicant = models.Applicant.objects.get(pk__exact=pk)
+    applicant.is_approved_rent = 1
+    applicant.save()
+    return redirect('beneficiary:check_url')
+
+def applicant_approve_clerk(request, pk):
+
+    applicant = models.Applicant.objects.get(pk__exact=pk)
+    applicant.is_approved_clerk = 1
+    applicant.save()
+    return redirect('beneficiary:check_url')
+
+
+
+
 
 
 

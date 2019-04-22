@@ -16,4 +16,12 @@ urlpatterns = [
     path('make_payment/', views.make_payment, name='make_payment'),
     path('make_temp_payment/', views.make_temp_payment, name='make_temp_payment'),
     path('edit_transactions_admin/', views.edit_transactions_admin, name='edit_transactions_admin'),
+    path('list_applicant_rent/', views.list_applicant_rent, name='list_applicant_rent'),
+    path('list_applicant_clerk/', views.list_applicant_clerk, name='list_applicant_clerk'),
+    path('list_applicant_adc/', views.list_applicant_adc, name='list_applicant_adc'),
+    path('disapprove_applicant/<int:pk>/', views.disapprove_applicant, name='disapprove_applicant'),
+    path('add_beneficiary/<int:pk>/', views.add_beneficiary, name='add_beneficiary'),
+    path('applicant_approve_rent/<int:pk>/', views.applicant_approve_rent, name='applicant_approve_rent'),
+    path('applicant_approve_clerk/<int:pk>/', views.applicant_approve_clerk, name='applicant_approve_clerk'),
+    
 ] 

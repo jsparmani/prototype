@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<ul>
+{% for applicant in applicant_list %}
+    <li>
+        {{applicant.scheme.name}}
+        {{applicant.name}}
+        {{applicant.gender}}
+        {{applicant.age}}
+        {{applicant.phone_num}}
+        {{applicant.account_number}}
+        {{applicant.ifsc_code}}
+
+        <a href="{% url 'beneficiary:disapprove_applicant' pk=applicant.pk %}" onclick="check_url()">Disapprove</a>
+        {% if user.username == 'rentcol' %}
+        <a href="{% url 'beneficiary:applicant_approve_rent' pk=applicant.pk %}" onclick="check_url()">Approve</a>
+        {% endif %}
+        {% if user.username == 'clerk' %}
+        <a href="{% url 'beneficiary:applicant_approve_clerk' pk=applicant.pk %}" onclick="check_url()">Approve</a>
+        {% endif %}
+        {% if user.username == 'adc' %}
+        <a href="{% url 'beneficiary:add_beneficiary' pk=applicant.pk %}" onclick="check_url()">Approve</a>
+        {% endif %}
+
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

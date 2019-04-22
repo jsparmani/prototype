@@ -7,15 +7,19 @@ function check_url() {
 }
 
 function manage() {
-    // console.log('Hi');
     if (window.location.href.includes('search')) {
         document.scrollingElement.scrollTop += parseFloat(localStorage.getItem("scrollPixel"))
-        
+
     }
     if (window.location.href.includes('check_url')) {
-        // console.log("Hello");
-        window.location.href = localStorage.getItem("url");
 
-        // $('html').scrollTop += localStorage.getItem("scrollPixel");
+        window.location.href = localStorage.getItem("url");
+    }
+
+    if (window.location.href.includes('list_applicant')) {
+        document.scrollingElement.scrollTop += parseFloat(localStorage.getItem("scrollPixel"))
+
     }
 }
+
+
